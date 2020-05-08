@@ -1,0 +1,1 @@
+export const BASE_URL =  'https://api.leeloo.ai/api/v1/accounts?limit=50&offset=0';

@@ -1,0 +1,13 @@
+import React,{useEffect} from 'react'
+
+export const Users = () => {
+  const [data, setData] = useState([]);
+  useEffect(()=>{
+
+  },[])
+  return (
+    <div>
+      
+    </div>
+  )
+}
