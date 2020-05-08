@@ -99,18 +99,22 @@ const useStyles = makeStyles((theme) => ({
 const Users = (props)=> {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
-  const [listItems, setListItems] = useState(Array.from(Array(30).keys(), n => n + 1));
-  const [isFetching, setIsFetching] = useInfiniteScroll(fetchMoreListItems);
-
+  const [isFetching, setIsFetching] = useState(false);
     useEffect(async ()=>{
     props.fetchUsers();
-    setListItems(users.slice(0,30))
   },[])
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
+  function handleScroll() {
+    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
+    console.log('Fetch more list items!');
+  }
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -147,7 +151,7 @@ const Users = (props)=> {
        <ModalComponent closeModal={closeModal} userDetails={props.userData} open={isModal} toggle={toggle}/>
               <Paper className={classes.paper}>
                 <TableComponent
-                users={listItems}
+                users={props.users}
                 setUserId={handleClickOnOrderBtn}
                 />
               </Paper>
